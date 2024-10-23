@@ -3,21 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fff;
+  --foreground: #546681;
+
+  --primary: #1a3066;
+  --primary-foreground: #fff;
+
+  --secondary: #484dff;
+  --secondary-foreground: #fff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply box-border;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      @apply w-3 h-3;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      @apply bg-secondary;
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-background;
+    }
 }
 
 @layer utilities {

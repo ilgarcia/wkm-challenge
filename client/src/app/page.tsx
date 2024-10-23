@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>wkm-challenge</div>;
+  return <div className="min-h-[120vh]">wkm-challenge</div>;
 }
