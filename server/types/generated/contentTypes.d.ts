@@ -369,6 +369,96 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCityCity extends Struct.CollectionTypeSchema {
+  collectionName: 'cities';
+  info: {
+    description: '';
+    displayName: 'City';
+    pluralName: 'cities';
+    singularName: 'city';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    city: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::city.city'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Relation<'oneToOne', 'api::state.state'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
+  collectionName: 'persons';
+  info: {
+    description: '';
+    displayName: 'Person';
+    pluralName: 'persons';
+    singularName: 'person';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    city: Schema.Attribute.Relation<'oneToOne', 'api::city.city'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::person.person'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Relation<'oneToOne', 'api::state.state'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiStateState extends Struct.CollectionTypeSchema {
+  collectionName: 'states';
+  info: {
+    displayName: 'State';
+    pluralName: 'states';
+    singularName: 'state';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::state.state'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -874,6 +964,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::city.city': ApiCityCity;
+      'api::person.person': ApiPersonPerson;
+      'api::state.state': ApiStateState;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
