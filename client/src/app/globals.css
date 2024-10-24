@@ -26,18 +26,32 @@
     @apply bg-background text-foreground;
   }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      @apply w-3 h-3;
-    }
-  
-    ::-webkit-scrollbar-thumb {
-      @apply bg-secondary;
-    }
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-3 h-3;
+  }
 
-    ::-webkit-scrollbar-track {
-      @apply bg-background;
-    }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-secondary;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-background rounded-2xl py-8 px-6 shadow-xl;
+  }
+
+  .upperTitle {
+    @apply uppercase font-bold text-secondary text-base tracking-widest mb-4;
+  }
+
+  .title {
+    @apply font-bold text-primary text-4xl tracking-tight mb-6;
+  }
 }
 
 @layer utilities {
