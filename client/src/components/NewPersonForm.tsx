@@ -27,7 +27,7 @@ const personFormSchema = z.object({
     .min(1, {
       message: "Digite um email",
     })
-    .email({ message: "Email invalido" }), 
+    .email({ message: "Email invalido" }),
   state: z.string().min(1, {
     message: "Escolha um estado",
   }),
@@ -39,7 +39,7 @@ const personFormSchema = z.object({
 function NewPersonForm() {
   const [states, setStates] = useState<State[]>([]);
   const [cities, setCities] = useState<City[]>([]);
-  // const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +70,14 @@ function NewPersonForm() {
   async function onSubmit(data: z.infer<typeof personFormSchema>) {
     const response = await postPerson(data);
 
-    if (response.status === "error" && response.error === "email") setError('email', { message: 'Este e-mail já está cadastrado' })
+    if (response.status === "error" && response.error === "email") {
+      setError("email", { message: "Este e-mail já está cadastrado" });
+      return
+    }
+
+    const id = response.personData.data.id
+    router.push(`/pessoa/${id}`);
+    
   }
 
   async function handleCitySelection(e: ChangeEvent<HTMLSelectElement>) {
@@ -167,7 +174,6 @@ function NewPersonForm() {
 }
 
 export default NewPersonForm;
-function setError(arg0: string, arg1: { message: string; }) {
+function setError(arg0: string, arg1: { message: string }) {
   throw new Error("Function not implemented.");
 }
-

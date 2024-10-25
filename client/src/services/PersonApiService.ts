@@ -108,10 +108,11 @@ export async function postPerson(data: Person) {
       ]
         .flat()
         .some((e: string) => e === "email");
-        return { status: "error", error: "email" };
+        return { status: "error", error: "email", data: emailError };
     }
     console.log("Valor incluído com sucesso");
-    return { status: "success" };
+    return { status: "success", personData };
+
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
