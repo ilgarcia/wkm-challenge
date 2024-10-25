@@ -60,7 +60,7 @@ export async function getPersonById(id: string) {
     const response = await fetch(url);
     const data = await response.json();
 
-    return data; 
+    return data;
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
@@ -90,16 +90,28 @@ export async function postPerson(data: Person) {
   };
 
   try {
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(dataToSend),
     });
-    const personData = await response.json();
 
-    return personData;
+    const personData = await res.json();
+
+    if (personData.error) {
+      const emailError = [
+        ...personData.error.details.errors.map((error: any) => {
+          if (error.name === "ValidationError") return error.path;
+        }),
+      ]
+        .flat()
+        .some((e: string) => e === "email");
+        return { status: "error", error: "email" };
+    }
+    console.log("Valor incluído com sucesso");
+    return { status: "success" };
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
