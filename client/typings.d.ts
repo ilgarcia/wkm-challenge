@@ -1,8 +1,17 @@
-
 interface Person {
-  id: number;
-  nome: string;
+  // id: number;
+  name: string;
   email: string;
-  estado: string;
-  cidade: string;
+  state: string;
+  city: string;
+}
+
+interface State {
+  id: number;
+  state: string;
+}
+
+interface City {
+  id: number;
+  city: string;
 }

@@ -4,17 +4,30 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { getFilteredCities, getStates, postPerson } from "@/services/PersonApiService";
+import { ChangeEvent, useEffect, useState } from "react";
 
 // This will be type-safe and validated.
 const personFormSchema = z.object({
-  nome: z.string().min(1).max(250),
+  name: z.string().min(1).max(250),
   email: z.string().min(1).email(),
-  estado: z.string().min(1),
-  cidade: z.string().min(1),
+  state: z.string().min(1),
+  city: z.string().min(1),
 });
 
 function NewPersonForm() {
-  const router = useRouter();
+  const [states, setStates] = useState<State[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
+  // const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await getStates();
+      setStates(data);
+    };
+
+    fetchData();
+  }, []);
 
   // Integrate react-hook-form with zod validation library
   const {
@@ -24,26 +37,31 @@ function NewPersonForm() {
   } = useForm<z.infer<typeof personFormSchema>>({
     resolver: zodResolver(personFormSchema),
     defaultValues: {
-      nome: "",
+      name: "",
       email: "",
-      estado: "",
-      cidade: "",
+      state: "",
+      city: "",
     },
   });
 
   // Submit handler
   function onSubmit(data: z.infer<typeof personFormSchema>) {
-    console.log(data);
+    postPerson(data)
+  }
+
+  async function handleCitySelection(e: ChangeEvent<HTMLSelectElement>) {
+    const {data} = await getFilteredCities(e.target.value)
+    setCities(data)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-5">
       <input
-        {...register("nome")}
+        {...register("name")}
         placeholder="Seu nome"
         className="bg-slate-700/10 px-3 py-2"
       />
-      {errors.nome?.message && <p>{errors.nome?.message}</p>}
+      {errors.name?.message && <p>{errors.name?.message}</p>}
       <input
         {...register("email")}
         placeholder="email@gmail.com"
@@ -54,30 +72,37 @@ function NewPersonForm() {
         <div className="col-span-2">
           <select
             defaultValue=""
-            {...register("estado")}
+            {...register("state")}
+            onChange={handleCitySelection}
             className="w-full bg-slate-700/10 px-3 py-2 required:invalid:text-red-800"
           >
             <option value="" disabled hidden>
               Estado
             </option>
-            <option value="SP">SP</option>
-            <option value="RJ">RJ</option>
+            {states.map((state) => (
+              <option key={state.id} value={state.id}>
+                {state.state}
+              </option>
+            ))}
           </select>
-          {errors.estado?.message && <p>{errors.estado?.message}</p>}
+          {errors.state?.message && <p>{errors.state?.message}</p>}
         </div>
         <div className="col-span-4">
           <select
             defaultValue=""
-            {...register("cidade")}
+            {...register("city")}
             className="w-full bg-slate-700/10 px-3 py-2"
           >
             <option value="" disabled hidden>
               Cidade
             </option>
-            <option value="SP">SP</option>
-            <option value="RJ">RJ</option>
+            {cities.map((city) => (
+              <option key={city.id} value={city.id}>
+                {city.city}
+              </option>
+            ))}
           </select>
-          {errors.cidade?.message && <p>{errors.cidade?.message}</p>}
+          {errors.city?.message && <p>{errors.city?.message}</p>}
         </div>
       </div>
       <input type="submit" />
