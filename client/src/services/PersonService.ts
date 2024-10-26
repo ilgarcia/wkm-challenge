@@ -59,7 +59,7 @@ export async function getPersonById(id: string) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    
+
     return data;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -101,11 +101,9 @@ export async function postPerson(dataToSend: Person) {
         error: { type: "email", message: "Este e-mail já está cadastrado" },
         data: emailError,
       };
-      // return { status: "error", error: "email", data: emailError };
     }
     console.log("Valor incluído com sucesso");
     return { data };
-    // return { status: "success", personData };
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;

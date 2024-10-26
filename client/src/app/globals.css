@@ -52,6 +52,18 @@
   .title {
     @apply font-bold text-primary text-4xl tracking-tight mb-6;
   }
+
+  .navlink:hover {
+    @apply brightness-110;
+  }
+
+  .navlink::after {
+    @apply content-[""] absolute w-full h-0.5 left-0 -bottom-1 bg-secondary scale-x-0 origin-bottom-right transition-transform duration-300 ease-out;
+  }
+
+  .navlink:hover::after {
+    @apply origin-bottom-left scale-x-100;
+  }
 }
 
 @layer utilities {

@@ -22,15 +22,15 @@
       "required": true,
       "unique": true
     },
-    "city": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::city.city"
-    },
     "state": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::state.state"
+    },
+    "city": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::city.city"
     }
   }
 }
