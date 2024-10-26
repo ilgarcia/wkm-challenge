@@ -12,9 +12,9 @@ export const personSchema = z.object({
   email: z
     .string()
     .min(1, {
-      message: "Digite um email",
+      message: "Digite o email",
     })
-    .email({ message: "Email invalido" }),
+    .email({ message: "Digite um email válido" }),
   state: z.string().min(1, {
     message: "Escolha um estado",
   }),

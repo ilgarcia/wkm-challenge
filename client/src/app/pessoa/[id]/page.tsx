@@ -7,11 +7,8 @@ type Props = {
 };
 
 function page({ params: { id } }: Props) {
-  
   return (
-    <section>
-      <p className="upperTitle">Cadastro</p>
-      <h1 className="title">Titulo</h1>
+    <section className="flex justify-center items-center w-full min-h-screen">
       <PersonCard id={id} />
     </section>
   );

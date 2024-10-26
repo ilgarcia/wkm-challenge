@@ -4,6 +4,7 @@ interface Person {
   email: string;
   state: State;
   city: City;
+  publishedAt?: string;
 }
 
 interface State {
