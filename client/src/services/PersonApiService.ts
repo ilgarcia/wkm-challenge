@@ -78,24 +78,13 @@ export async function postPerson(data: Person) {
   const url = new URL("/api" + path, baseURL);
   url.search = qs.stringify(query);
 
-  const { name, email, state, city } = data;
-
-  const dataToSend = {
-    data: {
-      name,
-      email,
-      state: { id: state },
-      city: { id: city },
-    },
-  };
-
   try {
     const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataToSend),
+      body: JSON.stringify({data: data}),
     });
 
     const personData = await res.json();

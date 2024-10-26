@@ -68,16 +68,22 @@ function NewPersonForm() {
 
   // Submit handler
   async function onSubmit(data: z.infer<typeof personFormSchema>) {
-    const response = await postPerson(data);
+    const dataToSend = {
+      name: data.name,
+      email: data.email,
+      state: { id: data.state },
+      city: { id: data.city },
+    };
+
+    const response = await postPerson(dataToSend);
 
     if (response.status === "error" && response.error === "email") {
       setError("email", { message: "Este e-mail já está cadastrado" });
-      return
+      return;
     }
 
-    const id = response.personData.data.id
+    const id = response.personData.data.id;
     router.push(`/pessoa/${id}`);
-    
   }
 
   async function handleCitySelection(e: ChangeEvent<HTMLSelectElement>) {

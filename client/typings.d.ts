@@ -1,17 +1,17 @@
 interface Person {
-  // id: number;
+  id?: number;
   name: string;
   email: string;
-  state: string;
-  city: string;
+  state: State;
+  city: City;
 }
 
 interface State {
-  id: number;
-  state: string;
+  id: string;
+  state?: string;
 }
 
 interface City {
-  id: number;
-  city: string;
+  id: string;
+  city?: string;
 }
