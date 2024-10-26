@@ -1,54 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import {
-  getFilteredCities,
-  getStates,
-  postPerson,
-} from "@/services/PersonApiService";
-import { ChangeEvent, useEffect, useState } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-// This will be type-safe and validated.
-const personFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, {
-      message: "Digite o nome",
-    })
-    .max(250, {
-      message: "O limite é de 250 caracteres para o nome",
-    }),
-  email: z
-    .string()
-    .min(1, {
-      message: "Digite um email",
-    })
-    .email({ message: "Email invalido" }),
-  state: z.string().min(1, {
-    message: "Escolha um estado",
-  }),
-  city: z.string().min(1, {
-    message: "Escolha uma cidade",
-  }),
-});
+import {
+  getFilteredCities,
+  postPerson,
+} from "@/services/PersonService";
+
+import { personSchema, PersonFormData } from "@/schema/personSchema";
+import { useGetStates } from "@/hooks/useFetchPerson";
 
 function NewPersonForm() {
-  const [states, setStates] = useState<State[]>([]);
   const [cities, setCities] = useState<City[]>([]);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await getStates();
-      setStates(data);
-    };
-
-    fetchData();
-  }, []);
+  const {loading, states} = useGetStates()
 
   // Integrate react-hook-form with zod validation library
   const {
@@ -56,8 +26,8 @@ function NewPersonForm() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<z.infer<typeof personFormSchema>>({
-    resolver: zodResolver(personFormSchema),
+  } = useForm<PersonFormData>({
+    resolver: zodResolver(personSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -67,7 +37,7 @@ function NewPersonForm() {
   });
 
   // Submit handler
-  async function onSubmit(data: z.infer<typeof personFormSchema>) {
+  async function onSubmit(data: PersonFormData) {
     const dataToSend = {
       name: data.name,
       email: data.email,
@@ -77,12 +47,9 @@ function NewPersonForm() {
 
     const response = await postPerson(dataToSend);
 
-    if (response.status === "error" && response.error === "email") {
-      setError("email", { message: "Este e-mail já está cadastrado" });
-      return;
-    }
+    if (response.error?.type === "email") setError("email", { message: "Este e-mail já está cadastrado" })
 
-    const id = response.personData.data.id;
+    const id = response.data.data.id;
     router.push(`/pessoa/${id}`);
   }
 
@@ -180,6 +147,3 @@ function NewPersonForm() {
 }
 
 export default NewPersonForm;
-function setError(arg0: string, arg1: { message: string }) {
-  throw new Error("Function not implemented.");
-}

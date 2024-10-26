@@ -59,7 +59,7 @@ export async function getPersonById(id: string) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-
+    
     return data;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -67,7 +67,7 @@ export async function getPersonById(id: string) {
   }
 }
 
-export async function postPerson(data: Person) {
+export async function postPerson(dataToSend: Person) {
   const baseURL = getStrapiURL();
   const path = "/persons";
 
@@ -84,24 +84,28 @@ export async function postPerson(data: Person) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({data: data}),
+      body: JSON.stringify({ data: dataToSend }),
     });
 
-    const personData = await res.json();
+    const data = await res.json();
 
-    if (personData.error) {
+    if (data.error) {
       const emailError = [
-        ...personData.error.details.errors.map((error: any) => {
+        ...data.error.details.errors.map((error: any) => {
           if (error.name === "ValidationError") return error.path;
         }),
       ]
         .flat()
         .some((e: string) => e === "email");
-        return { status: "error", error: "email", data: emailError };
+      return {
+        error: { type: "email", message: "Este e-mail já está cadastrado" },
+        data: emailError,
+      };
+      // return { status: "error", error: "email", data: emailError };
     }
     console.log("Valor incluído com sucesso");
-    return { status: "success", personData };
-
+    return { data };
+    // return { status: "success", personData };
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
