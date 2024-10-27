@@ -31,7 +31,7 @@ export const useFetchById = (id: string) => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return { person, loading };
 };

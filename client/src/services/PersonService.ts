@@ -91,7 +91,7 @@ export async function postPerson(dataToSend: Person) {
 
     if (data.error) {
       const emailError = [
-        ...data.error.details.errors.map((error: any) => {
+        ...data.error.details.errors.map((error: { name: string; path: string[]; }) => {
           if (error.name === "ValidationError") return error.path;
         }),
       ]

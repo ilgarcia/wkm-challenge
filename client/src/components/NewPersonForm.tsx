@@ -44,8 +44,10 @@ function NewPersonForm() {
 
     const response = await postPerson(dataToSend);
 
-    if (response.error?.type === "email")
+    if (response.error?.type === "email") {
       setError("email", { message: "Este e-mail já está cadastrado" });
+      return
+    }
 
     const id = response.data.data.id;
     router.push(`/pessoa/${id}`);

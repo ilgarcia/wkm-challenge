@@ -1,0 +1,39 @@
+services:
+  client:
+    build: ./client
+    container_name: client
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./client/.env.local
+    networks:
+      - mynetwork
+
+  server:
+    build: ./server
+    container_name: server
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./server/data:/app/data  # Persistir dados do SQLite
+    env_file:
+      - ./server/.env
+    networks:
+      - mynetwork
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+      - server
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

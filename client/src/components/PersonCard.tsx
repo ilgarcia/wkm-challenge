@@ -16,7 +16,7 @@ function PersonCard({ id }: { id: string }) {
         <div className="card max-w-md w-full mx-2">
           <p className="upperTitle">Cadastro</p>
           <h1 className="title">Pessoa cadastrada com sucesso</h1>
-          <div className="grid sm:grid-cols-2 max-w-sm mx-auto gap-y-2 sm:gap-y-4 mb-6">
+          <div className="grid sm:grid-cols-2 max-w-sm mx-auto gap-y-2 sm:gap-y-4 mb-6 p-3 rounded-xl border border-slate-200 bg-slate-100/40 ">
             <div>
               <p className="font-bold">Nome:</p>
               <p>{person[0].name}</p>
