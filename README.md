@@ -4,46 +4,110 @@ Este projeto foi desenvolvido como parte de um processo seletivo para Working Mi
 
 ## Tecnologias Utilizadas
 
-* Next.js - Framework React para renderização SSR e SSG.
-* TypeScript - Tipagem estática opcional para maior segurança.
-* Tailwind - Estilização utility first CSS.
-* Strapi v5 - headless CMS de gerenciamento de conteúdo.
+- Next.js - Framework React para renderização SSR e SSG.
+- TypeScript - Adiciona tipagem estática.
+- Tailwind - Estilização utility first CSS.
+- Zod - Biblioteca para validação e definição de esquemas com foco em TypeScript.
+- Strapi v5 - CMS headless que facilita a criação e gestão de conteúdo.
+- Docker - Plataforma de containerização que simplifica a criação, distribuição e execução de aplicações em ambientes isolados.
 
 ## Como Executar o Projeto
 
 ### Requisitos:
 
-* Node.js v16 ou superior
-* NPM ou Yarn instalado
+- Node.js v16 ou superior
+- NPM instalado
 
 ### Passo a passo:
 
-1. Clonar o Repositório:
+1. Clonar repositório localmente:
 
 ```bash
 git clone https://github.com/ilgarcia/wkm-challenge.git
 cd wkm-challenge
 ```
 
-2. Instalar Dependências:
+2. Configure variáveis de desenvolvimento
+
+* No diretório /client e configure seu arquivo .env.local. Você pode usar o arquivo .env.local.example como referência.
+
+```bash
+STRAPI_URL=http://localhost:1337
+```
+
+* No diretório /server e configure seu arquivo .env. Você pode usar o arquivo .env.example como referência.
+
+```bash
+HOST=0.0.0.0
+PORT=1337
+APP_KEYS="toBeModified1,toBeModified2"
+API_TOKEN_SALT=tobemodified
+ADMIN_JWT_SECRET=tobemodified
+TRANSFER_TOKEN_SALT=tobemodified
+JWT_SECRET=tobemodified
+```
+
+### Docker
+
+3. Construir as imagens do frontend e backend, levantar o banco de dados sqlite.
+
+```bash
+docker-compose up --build
+```
+
+> O backend do projeto estará disponível em http://localhost:1337.
+> Você será solicitado a criar seu primeiro usuário administrador.
+> O frontend do projeto estará disponível em http://localhost:3000.
+
+### Localmente
+
+3. Instalar Dependências na raiz do projeto:
+
+```bash
+npm run setup
+```
+
+4. Navegue até o diretório /server e executar o servidor de desenvolvimento:
+
+```bash
+npm run develop
+```
+
+> O backend do projeto estará disponível em http://localhost:1337.
+> Você será solicitado a criar seu primeiro usuário administrador.
+
+5. Navegue até o diretório /client e executar a aplicação:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
+> O frontend do projeto estará disponível em http://localhost:3000.
 
-3. Executar o Servidor de Desenvolvimento:
+**Você também pode executar ambos os projetos simultaneamente usando o *concurrently* para iniciar os dois ao rodar `npm run dev` na raiz do projeto.**
+
+##### Scripts local
+
+Você pode verificar os scripts dentro do arquivo package.json na raiz do seu projeto.
 
 ```bash
-npm run dev
-# ou
-yarn dev
+{
+  "scripts": {
+    "client": "npm run dev --prefix ../client/",
+    "server": "npm run dev --prefix ../server/",
+    "clear": "rimraf client/.next client/cache",
+    "setup:client": "cd client && npm install",
+    "setup:server": "cd server && npm install",
+    "setup": "npm install && npm run setup:client && npm run setup:server",
+    "dev": "npm run clear && concurrently \"cd client && npm run dev\" \"cd server && npm run develop\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}
 ```
-
-4. Acessar a Aplicação:
-
-O projeto estará disponível em http://localhost:3000.
 
 ## Contato
 

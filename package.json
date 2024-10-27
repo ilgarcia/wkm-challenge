@@ -2,13 +2,16 @@
   "scripts": {
     "client": "npm run dev --prefix ../client/",
     "server": "npm run dev --prefix ../server/",
-    "setup:client": "cd client && npm",
-    "setup:server": "cd server && npm",
-    "clear": "cd client && rm -rf .next && rm -rf cache",
-    "setup": "npm install && npm setup:client && npm setup:server",
-    "dev": "npm clear && concurrently \"cd client && npm run dev\" \"cd server && npm run develop\""
+    "clear": "rimraf client/.next client/cache",
+    "setup:client": "cd client && npm install",
+    "setup:server": "cd server && npm install",
+    "setup": "npm install && npm run setup:client && npm run setup:server",
+    "dev": "npm run clear && concurrently \"cd client && npm run dev\" \"cd server && npm run develop\""
   },
   "dependencies": {
     "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
   }
 }
