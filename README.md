@@ -123,6 +123,20 @@ Você pode verificar os scripts dentro do arquivo package.json na raiz do seu pr
 }
 ```
 
+### Importar dados (banco de dados vazio)
+
+> Em caso dos bancos de dados de estados e cidades estiverem vazios
+
+1. Repita os passos 3 e 4 da instalação localmente (caso necessário).
+
+Certifique-se de que a aplicação está configurada corretamente e conectada ao banco de dados.
+
+2. Navegue até o diretório /server e executar o script de importação dos dados:
+
+```bash
+  npm run import-data
+```
+
 ## Contato
 
 - Nome: Igor
