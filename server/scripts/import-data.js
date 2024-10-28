@@ -6,12 +6,12 @@ async function postStates(stateName) {
   try {
     // Check if the state already exists
     const response = await axios.get(
-      `http://localhost:1337/api/states?filters[state][$eq]=${stateName}`
+      `http://127.0.0.1:1337/api/states?filters[state][$eq]=${stateName}`
     );
 
     if (response.data.data.length === 0) {
       // State doesn't exist, so insert it
-      const result = await axios.post("http://localhost:1337/api/states", {
+      const result = await axios.post("http://127.0.0.1:1337/api/states", {
         data: { state: stateName },
       });
       console.log(`State inserted: ${stateName}`, result.data);
@@ -35,13 +35,13 @@ async function postCities(cityName, stateName) {
 
     // Check if the city already exists
     const response = await axios.get(
-      `http://localhost:1337/api/cities?filters[city][$eq]=${cityName}`
+      `http://127.0.0.1:1337/api/cities?filters[city][$eq]=${cityName}`
     );
 
     if (response.data.data.length === 0) {
       // City doesn't exist, so insert it
       const result = await axios.post(
-        "http://localhost:1337/api/cities?populate=*",
+        "http://127.0.0.1:1337/api/cities?populate=*",
         {
           data: { city: cityName, state: { id: stateId } },
         }

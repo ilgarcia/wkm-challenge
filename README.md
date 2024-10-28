@@ -61,7 +61,7 @@ DATABASE_FILENAME=.tmp/data.db
 JWT_SECRET=tobemodified
 ```
 
-### Docker
+## Docker
 
 3. Construir as imagens do frontend e backend, levantar o banco de dados sqlite.
 
@@ -69,11 +69,24 @@ JWT_SECRET=tobemodified
 docker-compose up --build
 ```
 
+**Backend**
 > O backend do projeto estará disponível em http://localhost:1337.
 > Você será solicitado a criar seu primeiro usuário administrador.
+
+**Frontend**
 > O frontend do projeto estará disponível em http://localhost:3000.
 
-### Localmente
+### Importar dados docker (banco de dados vazio)
+
+1º Passo - fazer o login
+
+2º Passo - Liberar permissões
+
+  - Settings > Users & Permissions plugin > Roles
+  - Liberar permissões create, find, update, delete, findOne das tabelas City, Person, State
+  - Executar no terminal do contêiner `server` o comando `node scripts/import-data.js`
+
+## Localmente
 
 3. Instalar Dependências na raiz do projeto:
 
@@ -123,7 +136,7 @@ Você pode verificar os scripts dentro do arquivo package.json na raiz do seu pr
 }
 ```
 
-### Importar dados (banco de dados vazio)
+### Importar dados localmente (banco de dados vazio)
 
 > Em caso dos bancos de dados de estados e cidades estiverem vazios
 
