@@ -26,7 +26,6 @@ export async function getFilteredCities(stateId: string) {
 
   const query = {
     sort: ["city:asc"],
-    state: { populate: "*" },
     filters: { state: { id: stateId } },
   };
 
@@ -49,7 +48,11 @@ export async function getPersonById(id: string) {
   const path = "/persons";
 
   const query = {
-    populate: "*",
+    populate: {
+      city: {
+        populate: ["state"],
+      },
+    },
     filters: { id: id },
   };
 
@@ -71,6 +74,8 @@ export async function postPerson(dataToSend: Person) {
   const baseURL = getStrapiURL();
   const path = "/persons";
 
+  console.log({ data: dataToSend });
+
   const query = {
     populate: "*",
   };
@@ -88,12 +93,15 @@ export async function postPerson(dataToSend: Person) {
     });
 
     const data = await res.json();
+    console.log(data);
 
     if (data.error) {
       const emailError = [
-        ...data.error.details.errors.map((error: { name: string; path: string[]; }) => {
-          if (error.name === "ValidationError") return error.path;
-        }),
+        ...data.error.details.errors.map(
+          (error: { name: string; path: string[] }) => {
+            if (error.name === "ValidationError") return error.path;
+          }
+        ),
       ]
         .flat()
         .some((e: string) => e === "email");
@@ -102,6 +110,7 @@ export async function postPerson(dataToSend: Person) {
         data: emailError,
       };
     }
+
     console.log("Valor incluído com sucesso");
     return { data };
   } catch (error) {

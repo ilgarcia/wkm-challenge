@@ -38,7 +38,6 @@ function NewPersonForm() {
     const dataToSend = {
       name: data.name,
       email: data.email,
-      state: { id: data.state },
       city: { id: data.city },
     };
 
@@ -46,7 +45,7 @@ function NewPersonForm() {
 
     if (response.error?.type === "email") {
       setError("email", { message: "Este e-mail já está cadastrado" });
-      return
+      return;
     }
 
     const id = response.data.data.id;
@@ -64,7 +63,9 @@ function NewPersonForm() {
         <input
           {...register("name")}
           placeholder="Seu nome"
-          className={`bg-slate-700/10 px-3 py-2 mb-1 w-full rounded-sm outline-none ${errors.city?.message ? "border border-red-600/40" : ""}`}
+          className={`bg-slate-700/10 px-3 py-2 mb-1 w-full rounded-sm outline-none ${
+            errors.city?.message ? "border border-red-600/40" : ""
+          }`}
         />
         {errors.name?.message && (
           <p className="flex items-center justify-center absolute top-full left-0.5 text-xs text-red-600">
@@ -79,7 +80,9 @@ function NewPersonForm() {
         <input
           {...register("email")}
           placeholder="email@gmail.com"
-          className={`bg-slate-700/10 px-3 py-2 mb-1 w-full rounded-sm outline-none ${errors.city?.message ? "border border-red-600/40" : ""}`}
+          className={`bg-slate-700/10 px-3 py-2 mb-1 w-full rounded-sm outline-none ${
+            errors.city?.message ? "border border-red-600/40" : ""
+          }`}
         />
         {errors.email?.message && (
           <p className="flex absolute top-full left-0.5 text-xs text-red-600">
@@ -96,7 +99,9 @@ function NewPersonForm() {
             defaultValue=""
             {...register("state")}
             onChange={handleCitySelection}
-            className={`w-full bg-slate-700/10 px-3 py-2 mb-1 rounded-sm outline-none ${errors.city?.message ? "border border-red-600/40" : ""}`}
+            className={`w-full bg-slate-700/10 px-3 py-2 mb-1 rounded-sm outline-none ${
+              errors.city?.message ? "border border-red-600/40" : ""
+            }`}
           >
             <option value="" disabled hidden>
               Estado
@@ -120,7 +125,9 @@ function NewPersonForm() {
           <select
             defaultValue=""
             {...register("city")}
-            className={`w-full bg-slate-700/10 px-3 py-2 mb-1 rounded-sm outline-none ${errors.city?.message ? "border border-red-600/40" : ""}`}
+            className={`w-full bg-slate-700/10 px-3 py-2 mb-1 rounded-sm outline-none ${
+              errors.city?.message ? "border border-red-600/40" : ""
+            }`}
             disabled={!cities[0]}
           >
             <option value="" disabled hidden>

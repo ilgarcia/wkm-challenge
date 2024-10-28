@@ -27,7 +27,7 @@ function PersonCard({ id }: { id: string }) {
             </div>
             <div>
               <p className="font-bold">Estado:</p>
-              <p>{person[0].state.state}</p>
+              <p>{person[0].city.state?.state}</p>
             </div>
             <div>
               <p className="font-bold">Cidade:</p>
