@@ -8,12 +8,14 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "city": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "state": {
       "type": "relation",

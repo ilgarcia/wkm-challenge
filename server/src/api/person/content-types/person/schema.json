@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -21,11 +21,6 @@
       "type": "email",
       "required": true,
       "unique": true
-    },
-    "state": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::state.state"
     },
     "city": {
       "type": "relation",

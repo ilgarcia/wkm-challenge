@@ -4,16 +4,18 @@
   "info": {
     "singularName": "state",
     "pluralName": "states",
-    "displayName": "State"
+    "displayName": "State",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "state": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     }
   }
 }

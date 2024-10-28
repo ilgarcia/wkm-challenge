@@ -74,8 +74,6 @@ export async function postPerson(dataToSend: Person) {
   const baseURL = getStrapiURL();
   const path = "/persons";
 
-  console.log({ data: dataToSend });
-
   const query = {
     populate: "*",
   };
@@ -93,7 +91,6 @@ export async function postPerson(dataToSend: Person) {
     });
 
     const data = await res.json();
-    console.log(data);
 
     if (data.error) {
       const emailError = [

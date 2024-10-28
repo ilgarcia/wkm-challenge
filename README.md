@@ -38,12 +38,26 @@ STRAPI_URL=http://localhost:1337
 * No diretório /server e configure seu arquivo .env. Você pode usar o arquivo .env.example como referência.
 
 ```bash
+# Server
 HOST=0.0.0.0
 PORT=1337
+
+# Secrets
 APP_KEYS="toBeModified1,toBeModified2"
 API_TOKEN_SALT=tobemodified
 ADMIN_JWT_SECRET=tobemodified
 TRANSFER_TOKEN_SALT=tobemodified
+JWT_SECRET=tobemodified
+
+# Database
+DATABASE_CLIENT=sqlite
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_NAME=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+DATABASE_SSL=false
+DATABASE_FILENAME=.tmp/data.db
 JWT_SECRET=tobemodified
 ```
 

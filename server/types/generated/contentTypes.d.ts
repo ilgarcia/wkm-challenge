@@ -378,10 +378,12 @@ export interface ApiCityCity extends Struct.CollectionTypeSchema {
     singularName: 'city';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    city: Schema.Attribute.String;
+    city: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -405,7 +407,7 @@ export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
     singularName: 'person';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     city: Schema.Attribute.Relation<'oneToOne', 'api::city.city'>;
@@ -427,7 +429,6 @@ export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
         maxLength: 250;
       }>;
     publishedAt: Schema.Attribute.DateTime;
-    state: Schema.Attribute.Relation<'oneToOne', 'api::state.state'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -437,12 +438,13 @@ export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
 export interface ApiStateState extends Struct.CollectionTypeSchema {
   collectionName: 'states';
   info: {
+    description: '';
     displayName: 'State';
     pluralName: 'states';
     singularName: 'state';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -452,7 +454,9 @@ export interface ApiStateState extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::state.state'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    state: Schema.Attribute.String & Schema.Attribute.Required;
+    state: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
